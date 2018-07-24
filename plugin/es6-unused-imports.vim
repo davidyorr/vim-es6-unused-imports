@@ -49,7 +49,8 @@ function! s:highlight_unused_imports()
       continue
     endif
     let import_str = matchstr(line, '\v(^\s*([\/]{2,})?\s*import\zs.*\zefrom)')
-    let import_str = substitute(import_str, '{\|}\|,', '', 'g')
+    " delete all curly braces, commas, and '<keyword or asterisk> as '
+    let import_str = substitute(import_str, '{\|}\|,\|\(\k\|\*\)\+\s\+as\s\+', '', 'g')
     let sp = split(import_str)
 
     for word in sp
